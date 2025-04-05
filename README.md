@@ -105,7 +105,7 @@ The collected data is sent to your Discord webhook.
 ### 1. Start the server:
 
 ```bash
-python3 pull_ips.py
+python3 logger.py
 ```
 
 ### 2. Send the image link:
