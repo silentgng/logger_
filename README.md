@@ -27,7 +27,7 @@ Image Logger is a Python-based application that logs information about users whe
 ### 1. Clone this repository:
 
 ```bash
-git clone https://github.com/silentgng/Pull-IPs.git
+git clone https://github.com/silentgng/logger_.git
 cd Pull-IPs
 ```
 
